@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <!-- <img src="./assets/logo.png"> -->
+    <vueCalendarMarker/>
+    <!-- <hello-world></hello-world> -->
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld'
-
+import vueCalendarMarker from './components/vue-calendar-marker'
 export default {
   name: 'App',
   components: {
+    vueCalendarMarker,
     HelloWorld
   }
 }
