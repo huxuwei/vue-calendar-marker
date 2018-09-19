@@ -1,8 +1,12 @@
 <template>
 	<div class="wrapper">
 		<div class="cm-header">
-			<span style="left:5px">&lt;</span>
-			<span style="right:5px">&gt;</span>
+			<i style="left:5px">&lt;</i>
+			<div class="year-month">
+				<span class="year">{{date.year}}</span>
+				<span class="month">{{date.month}}</span>
+			</div>
+			<i style="right:5px">&gt;</i>
 		</div>
 		<ul >
 			<li></li>
@@ -11,6 +15,7 @@
 </template>
 
 <script>
+import {add0} from './until.js'
 export default {
 	name: "vue-calender-marker",
 	props:{
@@ -28,18 +33,34 @@ export default {
 		}
 	},
   data() {
-    return {};
+    return {
+			date:{
+				year: '',
+				month: '',
+				day: ''
+			}
+		};
 	},
 	methods:{
 		init(){
-
+			let now = new Date()
+			this.date = {
+				year: now.getFullYear(),
+				month: add0(now.getMonth()+1),
+				day: now.getDate()
+			}
 		}
+	},
+	created(){
+		this.init()
 	}
 };
 </script>
 
-<style  scoped>
+<style lang='scss' scoped>
+$color:#ffffff;
 
+li{list-style: none;}
 .wrapper{
 	width: 100%;
 }
@@ -50,11 +71,24 @@ export default {
 	position: relative;
 	display: flex;
 	align-items: center;
-
+	justify-content: space-around;
 }
-.cm-header span{
+.year-month{
+	flex: 1;
+	height: inherit;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	span{
+		color: $color;
+		margin-left: 1em;
+	}
+}
+.cm-header i{
 	position: absolute;
-	color: #ffffff;
+	color: $color;
+	cursor: pointer;
 }
 </style>
 
