@@ -9,7 +9,10 @@
 			</div>
 			<i style="right:5px">&gt;</i>
 		</div>
-		<ul >
+		<div class="week">
+			<div v-for='item in week' :key="item">{{item}}</div>
+		</div>
+		<ul class="day">
 			<li v-for='(item,i) in dayList' :key="i" :class="{gray: item.day.getMonth()+1 ===date.month }">
 				{{item.day.getDate()}}
 			</li>
@@ -84,6 +87,10 @@ export default {
 				console.log
 				this.dayList.push(dayLabel)
 			}
+
+			for (let i = 0; i < array.length; i++) {
+				
+			}
 		}
 	},
 	created(){
@@ -94,15 +101,30 @@ export default {
 
 <style lang='scss' scoped>
 $color:#ffffff;
-
+$bgColor: #1a52f1cf;
 li{list-style: none;}
 .wrapper{
-	width: 100%;
+	width: 500px;
+	.week{
+		display: flex;
+		background-color: $bgColor;
+		>div{
+			flex:1;
+			line-height: 2;
+			color: #ffffff;
+		}
+	}
+	.day{
+		display: flex;
+		>li{
+			flex: 1
+		}
+	}
 }
 .cm-header{
 	width: 500px;
 	height: 30px;
-	background: #1a52f1cf;
+	background: $bgColor;
 	position: relative;
 	display: flex;
 	align-items: center;
