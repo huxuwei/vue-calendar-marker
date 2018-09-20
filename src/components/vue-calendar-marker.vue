@@ -3,13 +3,16 @@
 		<div class="cm-header">
 			<i style="left:5px">&lt;</i>
 			<div class="year-month">
-				<span class="year">{{date.year}}</span>
-				<span class="month">{{date.month}}</span>
+				<span class="year">{{date.year}}年{{date.month}}月</span>
+				
+				<!-- <span class="month">月</span> -->
 			</div>
 			<i style="right:5px">&gt;</i>
 		</div>
 		<ul >
-			<li></li>
+			<li v-for='(item,i) in dayList' :key="i" :class="{gray: item.day.getMonth()+1 ===date.month }">
+				{{item.day.getDate()}}
+			</li>
 		</ul>
 	</div>
 </template>
@@ -38,16 +41,48 @@ export default {
 				year: '',
 				month: '',
 				day: ''
-			}
+			},
+			week: ['一','二','三','四','五','六','日'],
+			dayList: []
 		};
 	},
 	methods:{
 		init(){
 			let now = new Date()
+			now.setDate(1)
 			this.date = {
 				year: now.getFullYear(),
 				month: add0(now.getMonth()+1),
 				day: now.getDate()
+			}
+
+			let weekOne = now.getDay() //1号的星期
+			let timeOne = now.getTime() //当前月1号的时间戳
+			weekOne = weekOne ===0 ? 7: weekOne
+			//加载1号前的日期
+			for (let i = weekOne-1; i > 0; i--) {
+				let dayOne = new Date(timeOne)
+				dayOne.setDate(dayOne.getDate() - i)
+				let dayLabel = {
+					day: dayOne
+				}
+
+				let year = dayOne.getFullYear()
+				let month = dayOne.getMonth()
+				let day = dayOne.getDate()
+				this.list.forEach(item => {
+					let t  = new Date(item)
+					//判断当天是否有标记
+					if(
+						t.getFullYear() ===  year &&
+						t.getMonth() ===  month &&
+						t.getDate() === day
+					){
+						dayLabel.label = item.label
+					}
+				});
+				console.log
+				this.dayList.push(dayLabel)
 			}
 		}
 	},
@@ -82,7 +117,7 @@ li{list-style: none;}
 	overflow: hidden;
 	span{
 		color: $color;
-		margin-left: 1em;
+		letter-spacing: 2px;
 	}
 }
 .cm-header i{
