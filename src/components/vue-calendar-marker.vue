@@ -88,9 +88,31 @@ export default {
 				this.dayList.push(dayLabel)
 			}
 
-			for (let i = 0; i < array.length; i++) {
-				
+			for (let i = 0; i < 35- (weekOne-1); i++) {
+				let dayOne = new Date(timeOne)
+				dayOne.setDate(dayOne.getDate()+ i)
+				let dayLabel = {
+					day: dayOne
+				}
+				let year = dayOne.getFullYear()
+				let month = dayOne.getMonth()
+				let day = dayOne.getDate()
+				this.list.forEach(item => {
+					let t  = new Date(item)
+					//判断当天是否有标记
+					if(
+						t.getFullYear() ===  year &&
+						t.getMonth() ===  month &&
+						t.getDate() === day
+					){
+						dayLabel.label = item.label
+					}
+				});
+				this.dayList.push(dayLabel)
 			}
+		},
+		setTxt(){
+
 		}
 	},
 	created(){
@@ -102,6 +124,7 @@ export default {
 <style lang='scss' scoped>
 $color:#ffffff;
 $bgColor: #1a52f1cf;
+ul{padding: 0}
 li{list-style: none;}
 .wrapper{
 	width: 500px;
@@ -116,10 +139,16 @@ li{list-style: none;}
 	}
 	.day{
 		display: flex;
+		flex-wrap: wrap;
 		>li{
-			flex: 1
+			flex: 1;
+			flex-basis: 14.2%;
+			height: 50px;
 		}
 	}
+}
+.active{
+	
 }
 .cm-header{
 	width: 500px;
